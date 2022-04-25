@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import * as SC from './styles';
 
@@ -34,18 +33,15 @@ const items = [
 ];
 
 const Main = () => {
-	const { userList = [] } = useSelector(selector);
-
-	const [users, setUsers] = useState([]);
-	const [FilterUsers, setFilterUsers] = useState([]);
+	const [expenses, setExpense] = useState([]);
 
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('');
 
 	const save = () => {
-		console.log(name);
+		setExpense((expenses) => [...expenses, { name, value }]);
 	};
-
+	console.log(expenses);
 	return (
 		<SC.Container data-testid="main-details">
 			<div>Test</div>
@@ -57,39 +53,34 @@ const Main = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>January</td>
-						<td>$100</td>
-					</tr>
-					<tr>
-						<td>February</td>
-						<td>$80</td>
-					</tr>
+					{expenses.map((item, index) => {
+						return;
+						<tr key={index}>
+							<td key={index + item.name}>{item.name}</td>
+							<td key={index + item.value}>{item.value}</td>
+						</tr>;
+					})}
 				</tbody>
-				<tfoot>
-					<tr>
-						<td>Sum</td>
-						<td>$180</td>
-					</tr>
-				</tfoot>
 			</SC.TableHead>
-			<div>Add records hewre</div>
+			<div>Add records here</div>
 			<div>Name</div>
 			<form>
 				<div>Name</div>
 				<input
 					value={name}
 					onChange={(e) => setName(e.target.value)}
-					label="Company"
+					label="Name"
 				/>
 				<div>Name</div>
 				<input
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
-					label="Company"
+					label="Value"
 				/>
 				<div></div>
-				<button type="button" onClick={save}></button>
+				<button onClick={save} type="button">
+					<div>Add</div>
+				</button>
 			</form>
 		</SC.Container>
 	);
